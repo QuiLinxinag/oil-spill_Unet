@@ -1,16 +1,8 @@
 # U-Net:Oil spill
 
-![input and output for a random image in the test dataset](https://i.imgur.com/GD8FcB7.png)
-
-
-Customized implementation of the [U-Net](https://arxiv.org/abs/1505.04597) in PyTorch for Kaggle's [Carvana Image Masking Challenge](https://www.kaggle.com/c/carvana-image-masking-challenge) from high definition images.
-
 - [Quick start](#quick-start)
-  - [Without Docker](#without-docker)
-  - [With Docker](#with-docker)
-- [Description](#description)
+  - [Windowms 10](#without-docker)
 - [Usage](#usage)
-  - [Docker](#docker)
   - [Training](#training)
   - [Prediction](#prediction)
 - [Weights & Biases](#weights--biases)
@@ -35,12 +27,6 @@ pip install -r requirements.txt
 bash scripts/download_data.sh
 python train.py --amp
 ```
-
-## Oil Spill Dataset
-This model was trained from scratch with 5k images and scored a [Dice coefficient](https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient) of 0.988423 on over 100k test images.
-
-It can be easily used for multiclass segmentation, portrait segmentation, medical segmentation, ...
-
 
 ## Usage
 
@@ -67,20 +53,19 @@ optional arguments:
   --amp                 Use mixed precision
 ```
 
-By default, the `scale` is 0.5, so if you wish to obtain better results (but use more memory), set it to 1.
+預設情況下，`scale`為 0.5，因此如果您希望獲得更好的結果（但使用更多記憶體），請將其設為 1。
 
-Automatic mixed precision is also available with the `--amp` flag. [Mixed precision](https://arxiv.org/abs/1710.03740) allows the model to use less memory and to be faster on recent GPUs by using FP16 arithmetic. Enabling AMP is recommended.
-
+自動混合精度也可透過 `--amp` 標誌使用。[Mixed precision](https://arxiv.org/abs/1710.03740)允許模型使用更少的內存，並且透過使用 FP16 演算法在最新的 GPU 上速度更快。建議啟用 AMP。
 
 ### Prediction
 
-After training your model and saving it to `MODEL.pth`, you can easily test the output masks on your images via the CLI.
+訓練模型並將其儲存到 `MODEL.pth` 後，您可以透過 CLI 輕鬆測試影像上的輸出遮罩。
 
-To predict a single image and save it:
+要預測單一圖像並儲存它：
 
 `python predict.py -i image.jpg -o output.jpg`
 
-To predict a multiple images and show them without saving them:
+要預測多個圖像並顯示它們而不保存它們：
 
 `python predict.py -i image1.jpg image2.jpg --viz --no-save`
 
@@ -107,34 +92,18 @@ optional arguments:
   --scale SCALE, -s SCALE
                         Scale factor for the input images
 ```
-You can specify which model file to use with `--model MODEL.pth`.
+
+您可以透過 `--model MODEL.pth` 指定要使用的模型檔案。
 
 ## Weights & Biases
 
-The training progress can be visualized in real-time using [Weights & Biases](https://wandb.ai/).  Loss curves, validation curves, weights and gradient histograms, as well as predicted masks are logged to the platform.
+訓練進度可以使用[Weights & Biases](https://wandb.ai/)即時視覺化。損失曲線、驗證曲線、權重和梯度直方圖以及預測光罩都記錄到平台上。
 
-When launching a training, a link will be printed in the console. Click on it to go to your dashboard. If you have an existing W&B account, you can link it
- by setting the `WANDB_API_KEY` environment variable. If not, it will create an anonymous run which is automatically deleted after 7 days.
-
-
-## Pretrained model
-A [pretrained model](https://github.com/milesial/Pytorch-UNet/releases/tag/v3.0) is available for the Carvana dataset. It can also be loaded from torch.hub:
-
-```python
-net = torch.hub.load('milesial/Pytorch-UNet', 'unet_carvana', pretrained=True, scale=0.5)
-```
-Available scales are 0.5 and 1.0.
+啟動訓練時，控制台中將列印連結。單擊它即可轉到您的儀表板。如果您已有 W&B 帳戶，則可以透過設定 `WANDB_API_KEY` 環境變數來連結它。如果沒有，它將建立一個匿名運行，並在 7 天後自動刪除。
 
 ## Data
-The Carvana data is available on the [Kaggle website](https://www.kaggle.com/c/carvana-image-masking-challenge/data).
 
-You can also download it using the helper script:
+缺乏一個全面的SAR圖像資料集，所有圖元都適當標記，這是溢油檢測的主要挑戰之一，導致在比較文章中描述的方法時結果不一致。2019年，作者K restenitis從不同的圖像區域創建了一組大致全面的標記資料。該資料庫通過使用歐洲航天局(ESA)的哥白尼開放獲取中心 1 收集石油污染海洋區域的衛星圖像。CleanS eaN et 服務還提供了來自歐洲海事安全局(EMSA )的污染事件的地理座標和時間資訊。其中包括 2015 年 9 月 28 日至 2017 年 10 月 31 日期間的石油洩漏事件，圖像由歐洲衛星 Sentinel-1 在 c 波段以 VV 偏振獲取。在確定感興趣的區域後，對原始 SAR 圖像進行預處理，即將圖像調整為 1250×650 維數，使用 7×7 中心濾波器降低光譜雜訊，然後進行 dB 到亮度的線性轉換。創建了包含 1112 張圖像的，這些圖像被分為5類:石油洩漏、相似物、船舶、陸地和海洋(作為背景)，這些圖像可以通過實驗室的網站公開獲得。
+在本研究中，我們使用上述資料集對SAR圖像進行語義分割。常見的比率是80/20,70/30和90/10，但它是任意的。值得注意的是，驗證集主要表示所有輸入範圍內的目標函數。有時驗證集中有簡單的資料，但訓練集中有非常困難的資料，導致關於良好泛化的錯誤陳述。測試集和驗證集約占訓練集的 1 0 -1 5 %，因此將資料集分為三部分，分別為 890 張、110 張和 112 張圖像，分別用於訓練、測試和驗證。
 
-```
-bash scripts/download_data.sh
-```
-
-The input images and target masks should be in the `data/imgs` and `data/masks` folders respectively (note that the `imgs` and `masks` folder should not contain any sub-folder or any other files, due to the greedy data-loader). For Carvana, images are RGB and masks are black and white.
-
-You can use your own dataset as long as you make sure it is loaded properly in `utils/data_loading.py`.
 
