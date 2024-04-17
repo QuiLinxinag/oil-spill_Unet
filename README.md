@@ -1,4 +1,4 @@
-# U-Net:Oil spill
+# U-Net:Oil Spill
 
 - [Quick start](#quick-start)
   - [Windowms 10](#without-docker)
@@ -13,7 +13,9 @@
 
 ### Windowms 10
 
-1. [下載 CUDA](https://developer.nvidia.com/cuda-downloads)
+python 3.9版本
+
+1. [下載 CUDA](https://developer.nvidia.com/cuda-downloads)11.8
 
 2. [Install PyTorch 1.13 or later](https://pytorch.org/get-started/locally/)
 
@@ -24,7 +26,6 @@ pip install -r requirements.txt
 
 4. Download the data and run training:
 ```bash
-bash scripts/download_data.sh
 python train.py --amp
 ```
 
