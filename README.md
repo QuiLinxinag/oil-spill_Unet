@@ -15,7 +15,7 @@
 
 python 3.9版本
 
-1. [下載 CUDA 11.8]([https://developer.nvidia.com/cuda-downloads](https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Windows)
+1. [下載 CUDA 11.8]([https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Windows])
 
 2. [Install PyTorch 1.13 or later](https://pytorch.org/get-started/locally/)
 
