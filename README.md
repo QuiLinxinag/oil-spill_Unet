@@ -17,14 +17,16 @@ python 3.9版本
 
 1. [下載 CUDA 11.8](https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Windows)
 
-2. [Install PyTorch 1.13 or later](https://pytorch.org/get-started/locally/)
+2. [下載 cuDNN 11.8](https://developer.nvidia.com/cuda-toolkit-archive)
 
-3. Install dependencies
+3. [Install PyTorch 1.13 or later](https://pytorch.org/get-started/locally/)
+
+4. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Download the data and run training:
+5. Download the data and run training:
 ```bash
 python train.py --amp
 ```
