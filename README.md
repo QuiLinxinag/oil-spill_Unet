@@ -23,8 +23,11 @@ python 3.9版本
 ```bash
 pip install -r requirements.txt
 ```
-
-4. Download the data and run training:
+4. Install tensorflow-gpu
+```
+pip install tensorflow-gpu==2.10.1
+```
+5. Download the data and run training:
 ```bash
 python train.py --amp
 ```
