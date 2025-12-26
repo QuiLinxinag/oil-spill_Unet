@@ -75,8 +75,9 @@ optional arguments:
 
 `python predict.py -i image1.jpg image2.jpg --viz --no-save`
 
-`python predict.py --models "checkpoints/checkpoints_unet/checkpoint_epoch20.pth" "checkpoints/checkpoints_attention/checkpoint_epoch20.pth" "checkpoints/checkpoints_EnhancedAttentionUNet/checkpoint_epoch20.pth" "checkpoints/checkpoints_CAR-UNet/checkpoint_epoch20.pth" --input "data/imgs/img_0016.jpg" "data/imgs/img_0662.jpg" --save-compare`
-
+```
+python predict.py --models "checkpoints/checkpoints_unet/checkpoint_epoch20.pth" "checkpoints/checkpoints_attention/checkpoint_epoch20.pth" "checkpoints/checkpoints_EnhancedAttentionUNet/checkpoint_epoch20.pth" "checkpoints/checkpoints_CAR-UNet/checkpoint_epoch20.pth" --input "data/imgs/img_0016.jpg" "data/imgs/img_0662.jpg" --save-compare
+```
 ```console
 > python predict.py -h
 usage: predict.py [-h] [--model FILE] --input INPUT [INPUT ...] 
